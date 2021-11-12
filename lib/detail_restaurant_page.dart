@@ -14,35 +14,80 @@ class DetailRestaurantPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(restaurant.name),
-        shape: BeveledRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(16.0),
-          ),
-        ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Column(
-          children: [
-            Text(
-              'Cocot e!',
-              style: TextStyle(fontSize: 50.0),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: restaurant.menus.foods.map((food) {
-                return Text(food.name);
-              }).toList(),
-            ),
-            SizedBox(height: 16.0),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: restaurant.menus.drinks.map((drink) {
-                return Text(drink.name);
-              }).toList(),
-            ),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(children: [
+                Image.network(restaurant.pictureId),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Card(
+                //       margin: EdgeInsets.all(0),
+                //       child: Row(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           IconButton(
+                //             onPressed: () {
+                //               Navigator.pop(context);
+                //             },
+                //             icon: Icon(Icons.arrow_back),
+                //           ),
+                //         ],
+                //       ),
+                //       shape: BeveledRectangleBorder(
+                //         borderRadius: BorderRadius.only(
+                //           bottomRight: Radius.circular(16.0),
+                //         ),
+                //       ),
+                //     ),
+                //     Card(
+                //       margin: EdgeInsets.all(0),
+                //       child: Row(
+                //         mainAxisSize: MainAxisSize.min,
+                //         children: [
+                //           Padding(
+                //             padding: EdgeInsets.only(right: 16.0),
+                //             child: Text(
+                //               restaurant.name,
+                //               style: Theme.of(context).textTheme.headline6,
+                //             ),
+                //           ),
+                //           IconButton(
+                //             onPressed: () {
+                //               Navigator.pop(context);
+                //             },
+                //             icon: Icon(Icons.star),
+                //           ),
+                //         ],
+                //       ),
+                //       shape: BeveledRectangleBorder(
+                //         borderRadius: BorderRadius.only(
+                //           bottomRight: Radius.circular(16.0),
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                // ),
+              ]),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: restaurant.menus.foods.map((food) {
+                  return Text(food.name);
+                }).toList(),
+              ),
+              SizedBox(height: 16.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: restaurant.menus.drinks.map((drink) {
+                  return Text(drink.name);
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
