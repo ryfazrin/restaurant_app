@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/Restaurant.dart';
+import 'package:restaurant_app/widget/coming_soon_alert.dart';
 import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
@@ -95,19 +96,7 @@ class DetailRestaurantPage extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: Text('Coming Soon!'),
-                                content:
-                                    Text('This feature will be coming soon!'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Ok'),
-                                  ),
-                                ],
-                              );
+                              return ComingSoonAlert();
                             },
                           );
                         },
@@ -151,19 +140,7 @@ class DetailRestaurantPage extends StatelessWidget {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: Text('Coming Soon!'),
-                                content:
-                                    Text('This feature will be coming soon!'),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Text('Ok'),
-                                  ),
-                                ],
-                              );
+                              return ComingSoonAlert();
                             },
                           );
                         },
