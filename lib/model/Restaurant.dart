@@ -55,15 +55,6 @@ class Menus {
   }
 }
 
-// List<Menus> parseMenus(String? json) {
-//   if (json == null) {
-//     return [];
-//   }
-//
-//   final List parsed = jsonDecode(json)["restaurants"]["menus"];
-//   return parsed.map((json) => Menus.fromJson(json)).toList();
-// }
-
 // Foods
 class Foods {
   late String name;
