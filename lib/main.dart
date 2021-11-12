@@ -15,7 +15,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Restaurant App'),
+        ),
+        body: FutureBuilder<String>(
+          future: DefaultAssetBundle.of(context)
+              .loadString('assets/local_restaurant.json'),
+          builder: (context, snapshot) {},
+        ),
+      ),
     );
   }
 }
