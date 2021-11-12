@@ -15,6 +15,24 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Submission 1
+
+Kriteria :
+
+Daftar restoran
+Menampilkan daftar restoran dengan informasi singkat. (Selesai)
+Detail restoran
+Menampilkan detail informasi ketika salah satu item ditekan. (Selesai)
+Improv :
+
+Menuliskan kode dengan bersih. (ya)
+
+Menerapkan tampilan aplikasi yang sesuai standar. (ya)
+
+Memberikan pesan 'Coming soon' difitur yang belum dibuat.
+
+Menggunakan dummy image untuk foods dan drinks.
+
 ## solution
 parse json : https://www.bezkoder.com/dart-flutter-parse-json-string-array-to-object-list/
 
