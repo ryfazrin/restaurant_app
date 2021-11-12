@@ -90,8 +90,27 @@ class DetailRestaurantPage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
                         child: Text('View All'),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Coming Soon!'),
+                                content:
+                                    Text('This feature will be coming soon!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -101,7 +120,18 @@ class DetailRestaurantPage extends StatelessWidget {
                     primary: false,
                     crossAxisCount: 3,
                     children: restaurant.menus.foods.map((food) {
-                      return Card(child: Center(child: Text(food.name)));
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://via.placeholder.com/150/?text=${food.name}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
                     }).toList(),
                   ),
                   SizedBox(height: 18.0),
@@ -116,8 +146,27 @@ class DetailRestaurantPage extends StatelessWidget {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
                         child: Text('View All'),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Coming Soon!'),
+                                content:
+                                    Text('This feature will be coming soon!'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -127,7 +176,19 @@ class DetailRestaurantPage extends StatelessWidget {
                     primary: false,
                     crossAxisCount: 3,
                     children: restaurant.menus.drinks.map((drink) {
-                      return Card(child: Center(child: Text(drink.name)));
+                      return Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: InkWell(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://via.placeholder.com/150/?text=${drink.name}',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      );
+                      ;
                     }).toList(),
                   ),
                 ],
