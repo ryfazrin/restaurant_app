@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/Restaurant.dart';
 
+import 'detail_restaurant_page.dart';
+
 class RestaurantListPage extends StatelessWidget {
   static const routeName = '/restaurant_list';
 
@@ -52,15 +54,26 @@ class RestaurantListPage extends StatelessWidget {
                       padding: EdgeInsets.all(6.0),
                       child: InkWell(
                         borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, DetailRestaurantPage.routeName,
+                              arguments: restaurant);
+                        },
                         child: Column(
                           children: [
-                            Image.network(
-                              restaurant.pictureId,
-                              fit: BoxFit.cover,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8.0),
+                              child: Image.network(
+                                restaurant.pictureId,
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             SizedBox(height: 8.0),
                             Text(restaurant.name),
+                            // SizedBox(height: 8.0),
+                            // Text(restaurant.city),
+                            // SizedBox(height: 8.0),
+                            // Text(restaurant.rating.toString()),
                           ],
                         ),
                       ),
