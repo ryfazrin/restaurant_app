@@ -12,10 +12,6 @@ class DetailRestaurantPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(restaurant.name),
-      //   elevation: 0.0,
-      // ),
       body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool isScrolled) {
@@ -54,8 +50,10 @@ class DetailRestaurantPage extends StatelessWidget {
           },
           body: SingleChildScrollView(
             child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -109,16 +107,39 @@ class DetailRestaurantPage extends StatelessWidget {
                     style: TextStyle(),
                   ),
                   SizedBox(height: 18.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Text(
+                    'Foods',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 6.0),
+                  GridView.count(
+                    shrinkWrap: true,
+                    primary: false,
+                    crossAxisCount: 3,
                     children: restaurant.menus.foods.map((food) {
-                      return Card(child: Text(food.name));
+                      return Card(child: Center(child: Text(food.name)));
                     }).toList(),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: 18.0),
+                  Text(
+                    'Drinks',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 6.0),
+                  GridView.count(
+                    shrinkWrap: true,
+                    primary: false,
+                    crossAxisCount: 3,
                     children: restaurant.menus.drinks.map((drink) {
-                      return Card(child: Text(drink.name));
+                      return Card(child: Center(child: Text(drink.name)));
                     }).toList(),
                   ),
                 ],
@@ -126,28 +147,6 @@ class DetailRestaurantPage extends StatelessWidget {
             ),
           ),
         ),
-        // child: SingleChildScrollView(
-        //   child: Column(
-        //     children: [
-        //       // Stack(children: [
-        //       //   Image.network(restaurant.pictureId),
-        //       // ]),
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: restaurant.menus.foods.map((food) {
-        //           return Text(food.name);
-        //         }).toList(),
-        //       ),
-        //       SizedBox(height: 16.0),
-        //       Column(
-        //         crossAxisAlignment: CrossAxisAlignment.start,
-        //         children: restaurant.menus.drinks.map((drink) {
-        //           return Text(drink.name);
-        //         }).toList(),
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ),
     );
   }
