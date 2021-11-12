@@ -14,3 +14,8 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+## solution
+parse json : https://www.bezkoder.com/dart-flutter-parse-json-string-array-to-object-list/
+membuat model json : https://www.dicoding.com/academies/195/discussions/114022
+menampilkan foods & drinks : https://www.dicoding.com/academies/195/discussions/125677 
