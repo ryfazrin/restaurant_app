@@ -17,5 +17,9 @@ samples, guidance on mobile development, and a full API reference.
 
 ## solution
 parse json : https://www.bezkoder.com/dart-flutter-parse-json-string-array-to-object-list/
+
 membuat model json : https://www.dicoding.com/academies/195/discussions/114022
-menampilkan foods & drinks : https://www.dicoding.com/academies/195/discussions/125677 
+
+menampilkan foods & drinks : https://www.dicoding.com/academies/195/discussions/125677
+
+Rating Generate : https://medium.com/icnh/a-star-rating-widget-for-flutter-41560f82c8cb
