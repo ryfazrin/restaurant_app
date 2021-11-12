@@ -107,13 +107,21 @@ class DetailRestaurantPage extends StatelessWidget {
                     style: TextStyle(),
                   ),
                   SizedBox(height: 18.0),
-                  Text(
-                    'Foods',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Foods',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text('View All'),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 6.0),
                   GridView.count(
@@ -125,13 +133,21 @@ class DetailRestaurantPage extends StatelessWidget {
                     }).toList(),
                   ),
                   SizedBox(height: 18.0),
-                  Text(
-                    'Drinks',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.w500,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Drinks',
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {},
+                        child: Text('View All'),
+                      ),
+                    ],
                   ),
                   SizedBox(height: 6.0),
                   GridView.count(
