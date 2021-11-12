@@ -55,40 +55,64 @@ class DetailSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverAppBar(
-          pinned: true,
-          expandedHeight: 300.0,
-          elevation: 0.0,
-          flexibleSpace: FlexibleSpaceBar(
-            title: Text(dataRestaurant.name),
-            centerTitle: true,
-            background: Image.network(
-              dataRestaurant.pictureId,
-              fit: BoxFit.fill,
+    return NestedScrollView(
+      headerSliverBuilder: (BuildContext context, bool isScrolled) {
+        return [
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 300.0,
+            elevation: 0.0,
+            shape: BeveledRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(16.0),
+              ),
             ),
-          ),
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                color: Colors.red,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(dataRestaurant.name),
+              background: Image.network(
+                dataRestaurant.pictureId,
+                fit: BoxFit.fill,
+              ),
+            ),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                backgroundColor: Colors.white,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  color: Colors.red,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
             ),
           ),
+        ];
+      },
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(dataRestaurant.city),
+            Text(dataRestaurant.description),
+            Text(dataRestaurant.rating.toString()),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: dataRestaurant.menus.foods.map((food) {
+                return Text(food.name);
+              }).toList(),
+            ),
+            SizedBox(height: 16.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: dataRestaurant.menus.drinks.map((drink) {
+                return Text(drink.name);
+              }).toList(),
+            ),
+          ],
         ),
-        SliverFillRemaining(
-          child: Center(
-            child: Text('Hello'),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
