@@ -7,7 +7,7 @@ class Restaurant {
   late String pictureId;
   late String city;
   late num rating;
-  // late List<dynamic> menus;
+  late Menus menus;
 
   Restaurant({
     required this.id,
@@ -16,7 +16,7 @@ class Restaurant {
     required this.pictureId,
     required this.city,
     required this.rating,
-    // required this.menus,
+    required this.menus,
   });
 
   Restaurant.fromJson(Map<String, dynamic> restaurant) {
@@ -26,7 +26,7 @@ class Restaurant {
     pictureId = restaurant['pictureId'];
     city = restaurant['city'];
     rating = restaurant['rating'];
-    // menus = Menus.fromJson(restaurant['menus']) as List;
+    menus = Menus.fromJson(restaurant['menus']);
   }
 }
 
@@ -39,9 +39,10 @@ List<Restaurant> parseRestaurants(String? json) {
   return parsed.map((json) => Restaurant.fromJson(json)).toList();
 }
 
+// Menus
 class Menus {
-  late String foods;
-  late String drinks;
+  late List<Foods> foods;
+  late List<Drinks> drinks;
 
   Menus({
     required this.foods,
@@ -49,7 +50,38 @@ class Menus {
   });
 
   Menus.fromJson(Map<String, dynamic> menu) {
-    foods = menu['foods'];
-    foods = menu['drinks'];
+    foods = List<Foods>.from(menu['foods'].map((x) => Foods.fromJson(x)));
+    drinks = List<Drinks>.from(menu['drinks'].map((x) => Drinks.fromJson(x)));
+  }
+}
+
+// List<Menus> parseMenus(String? json) {
+//   if (json == null) {
+//     return [];
+//   }
+//
+//   final List parsed = jsonDecode(json)["restaurants"]["menus"];
+//   return parsed.map((json) => Menus.fromJson(json)).toList();
+// }
+
+// Foods
+class Foods {
+  late String name;
+
+  Foods({required this.name});
+
+  Foods.fromJson(Map<String, dynamic> food) {
+    name = food['name'];
+  }
+}
+
+// Drinks
+class Drinks {
+  late String name;
+
+  Drinks({required this.name});
+
+  Drinks.fromJson(Map<String, dynamic> food) {
+    name = food['name'];
   }
 }
