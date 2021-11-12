@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:restaurant_app/model/Restaurant.dart';
 
 import 'detail_restaurant_page.dart';
@@ -45,44 +46,50 @@ class RestaurantListPage extends StatelessWidget {
                 final List<Restaurant> restaurants =
                     parseRestaurants(snapshot.data);
 
-                return GridView.count(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  physics: ScrollPhysics(),
-                  children: restaurants.map((restaurant) {
-                    return Padding(
-                      padding: EdgeInsets.all(6.0),
-                      child: InkWell(
-                        borderRadius: BorderRadius.all(Radius.circular(6.0)),
-                        onTap: () {
-                          Navigator.pushNamed(
-                              context, DetailRestaurantPage.routeName,
-                              arguments: restaurant);
-                        },
-                        child: Column(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                restaurant.pictureId,
-                                fit: BoxFit.cover,
+                return StaggeredGridView.countBuilder(
+                    shrinkWrap: true,
+                    crossAxisCount: 2,
+                    physics: ScrollPhysics(),
+                    staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+                    itemCount: restaurants.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final Restaurant restaurant = restaurants[index];
+
+                      return Padding(
+                        padding: const EdgeInsets.all(6.0),
+                        child: InkWell(
+                          borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, DetailRestaurantPage.routeName,
+                                arguments: restaurant);
+                          },
+                          child: Column(
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Image.network(
+                                  restaurant.pictureId,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: 8.0),
-                            Text(restaurant.name),
-                            // SizedBox(height: 8.0),
-                            // Text(restaurant.city),
-                            // SizedBox(height: 8.0),
-                            // Text(restaurant.rating.toString()),
-                          ],
+                              SizedBox(height: 8.0),
+                              Text(
+                                restaurant.name,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              // SizedBox(height: 8.0),
+                              // Text(restaurant.city),
+                              // SizedBox(height: 8.0),
+                              // Text(restaurant.rating.toString()),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList(),
-                  //     (context, index) {
-                  //   return _buildRestaurantItem(context, restaurants[index]);
-                  // },
-                );
+                      );
+                    });
               },
             ),
           ],
