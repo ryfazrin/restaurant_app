@@ -13,14 +13,21 @@ class RestaurantListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Restaurant App'),
+        title: Text(
+          'Restaurant App',
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0.0,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 16.0,
                 horizontal: 8.0,
               ),
@@ -29,7 +36,10 @@ class RestaurantListPage extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome!',
-                    style: TextStyle(fontSize: 24.0),
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
                   ),
                   SizedBox(height: 8.0),
                   Text(
@@ -124,65 +134,4 @@ class RestaurantListPage extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
-  //   return InkWell(
-  //     child: ListView(
-  //       children: [
-  //         Stack(
-  //           children: [
-  //             Container(
-  //               height: MediaQuery.of(context).size.height / 3.6,
-  //               width: MediaQuery.of(context).size.width / 2.2,
-  //               child: ClipRRect(
-  //                 borderRadius: BorderRadius.circular(8.0),
-  //                 child: Image.network(
-  //                   restaurant.pictureId,
-  //                   fit: BoxFit.cover,
-  //                 ),
-  //               ),
-  //             ),
-  //             Positioned(
-  //               right: -10.0,
-  //               bottom: 3.0,
-  //               child: RawMaterialButton(
-  //                 onPressed: () {},
-  //                 fillColor: Colors.white,
-  //                 shape: CircleBorder(),
-  //                 elevation: 4.0,
-  //                 child: Padding(
-  //                   padding: EdgeInsets.all(5),
-  //                   child: Icon(
-  //                     Icons.favorite_border,
-  //                     color: Colors.red,
-  //                     size: 17,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //     onTap: () {},
-  //   );
-  // }
 }
-
-// Widget _buildRestaurantItem(BuildContext context, Restaurant restaurant) {
-//   return ListTile(
-//     isThreeLine: true,
-//     leading: Image.network(
-//       restaurant.pictureId,
-//       width: 100,
-//     ),
-//     title: Text(restaurant.name),
-//     subtitle: Text(restaurant.city),
-//     // subtitle: Text(restaurant.menus.foods.map((e) => e.name).toString()),
-//     trailing: Text(restaurant.rating.toString()),
-//     onTap: () {
-//       Navigator.pushNamed(context, DetailRestaurantPage.routeName,
-//           arguments: restaurant);
-//     },
-//   );
-// }
