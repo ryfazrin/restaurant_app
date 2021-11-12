@@ -14,8 +14,28 @@ class RestaurantListPage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Restaurant App'),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome!',
+                    style: TextStyle(fontSize: 24.0),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Pick Your Favorite Restaurant',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              ),
+            ),
             FutureBuilder<dynamic>(
               future: DefaultAssetBundle.of(context)
                   .loadString('assets/local_restaurant.json'),
@@ -28,16 +48,21 @@ class RestaurantListPage extends StatelessWidget {
                   crossAxisCount: 2,
                   physics: ScrollPhysics(),
                   children: restaurants.map((restaurant) {
-                    return InkWell(
-                      onTap: () {},
-                      child: Column(
-                        children: [
-                          Image.network(
-                            restaurant.pictureId,
-                            fit: BoxFit.cover,
-                          ),
-                          Text(restaurant.name),
-                        ],
+                    return Padding(
+                      padding: EdgeInsets.all(6.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(6.0)),
+                        onTap: () {},
+                        child: Column(
+                          children: [
+                            Image.network(
+                              restaurant.pictureId,
+                              fit: BoxFit.cover,
+                            ),
+                            SizedBox(height: 8.0),
+                            Text(restaurant.name),
+                          ],
+                        ),
                       ),
                     );
                   }).toList(),
