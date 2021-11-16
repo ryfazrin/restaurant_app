@@ -165,7 +165,6 @@ class DetailRestaurantPage extends StatelessWidget {
                           ),
                         ),
                       );
-                      ;
                     }).toList(),
                   ),
                 ],
