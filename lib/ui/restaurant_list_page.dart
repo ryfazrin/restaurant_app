@@ -1,13 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/ui/detail_restaurant_page.dart';
 
-import 'detail_restaurant_page.dart';
-
-class RestaurantListPage extends StatelessWidget {
+class RestaurantListPage extends StatefulWidget {
   static const routeName = '/restaurant_list';
 
   const RestaurantListPage({Key? key}) : super(key: key);
+
+  @override
+  State<RestaurantListPage> createState() => _RestaurantListPageState();
+}
+
+class _RestaurantListPageState extends State<RestaurantListPage> {
+  late Future<RestaurantResult> _restaurant;
+
+  @override
+  void initState() {
+    super.initState();
+    _restaurant = ApiService().topHeadlines();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,104 +68,114 @@ class RestaurantListPage extends StatelessWidget {
                 ],
               ),
             ),
-            FutureBuilder<dynamic>(
-              future: DefaultAssetBundle.of(context)
-                  .loadString('assets/local_restaurant.json'),
-              builder: (context, snapshot) {
-                final List<Restaurant> restaurants =
-                    parseRestaurants(snapshot.data);
+            _buildList(),
+          ],
+        ),
+      ),
+    );
+  }
 
-                return StaggeredGridView.countBuilder(
-                  shrinkWrap: true,
-                  crossAxisCount: 2,
-                  physics: ScrollPhysics(),
-                  staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-                  itemCount: restaurants.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (snapshot.connectionState != ConnectionState.done) {
-                      // loading widget
-                      return Center(child: CircularProgressIndicator());
-                    } else {
-                      if (snapshot.hasData) {
-                        // success widget
-                        final Restaurant restaurant = restaurants[index];
+  Widget _buildList() {
+    return FutureBuilder(
+      future: _restaurant,
+      builder: (context, AsyncSnapshot<RestaurantResult> snapshot) {
+        var state = snapshot.connectionState;
 
-                        return Padding(
-                          padding: const EdgeInsets.all(6.0),
-                          child: InkWell(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(6.0)),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                  context, DetailRestaurantPage.routeName,
-                                  arguments: restaurant);
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    restaurant.pictureId,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 8.0, horizontal: 2.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        restaurant.name,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8.0),
-                                      Text(restaurant.city),
-                                      SizedBox(height: 8.0),
-                                      Wrap(
-                                        crossAxisAlignment:
-                                            WrapCrossAlignment.center,
-                                        children: [
-                                          Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: List.generate(
-                                                restaurant.rating.toInt(),
-                                                (index) {
-                                              return Icon(
-                                                Icons.star,
-                                                size: 14.0,
-                                                color: Colors.amber,
-                                              );
-                                            }),
-                                          ),
-                                          Text(restaurant.rating.toString()),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        // error widget
-                        return Center(
-                          child: Text(snapshot.error.toString()),
-                        );
-                      } else {
-                        // loading widget
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    }
-                  },
-                );
+        if (state != ConnectionState.done) {
+          // loading widget
+          return Center(child: CircularProgressIndicator());
+        } else {
+          if (snapshot.hasData) {
+            // success widget
+            return StaggeredGridView.countBuilder(
+              shrinkWrap: true,
+              crossAxisCount: 2,
+              physics: ScrollPhysics(),
+              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+              itemCount: snapshot.data?.restaurants.length,
+              itemBuilder: (BuildContext context, int index) {
+                var restaurant = snapshot.data?.restaurants[index];
+                return CardRestaurant(restaurant: restaurant);
               },
+            );
+          } else if (snapshot.hasError) {
+            // error widget
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          } else {
+            // loading widget
+            return Center(child: CircularProgressIndicator());
+          }
+        }
+      },
+    );
+  }
+}
+
+class CardRestaurant extends StatelessWidget {
+  const CardRestaurant({
+    Key? key,
+    required this.restaurant,
+  }) : super(key: key);
+
+  final Restaurant? restaurant;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: InkWell(
+        borderRadius: BorderRadius.all(Radius.circular(6.0)),
+        onTap: () {
+          Navigator.pushNamed(context, DetailRestaurantPage.routeName,
+              arguments: restaurant);
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
+                fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    restaurant!.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(restaurant!.city),
+                  SizedBox(height: 8.0),
+                  Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children:
+                            List.generate(restaurant!.rating.toInt(), (index) {
+                          return Icon(
+                            Icons.star,
+                            size: 14.0,
+                            color: Colors.amber,
+                          );
+                        }),
+                      ),
+                      Text(restaurant!.rating.toString()),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
