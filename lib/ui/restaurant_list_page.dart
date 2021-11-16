@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/widget/card.dart';
 
 class RestaurantListPage extends StatefulWidget {
@@ -35,7 +36,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
         elevation: 0.0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, SearchPage.routeName);
+            },
             icon: Icon(Icons.search),
           ),
         ],
