@@ -24,4 +24,14 @@ class ApiService {
       throw Exception('Failed to load top headlines');
     }
   }
+
+  Future<RestaurantSearchResult> getSearchRestaurant(String query) async {
+    final response = await http.get(Uri.parse(_baseUrl + 'search?q=' + query));
+    if (response.statusCode == 200 || response.statusCode == 400) {
+      return RestaurantSearchResult.fromJson(json.decode(response.body));
+    } else {
+      print(response.statusCode);
+      throw Exception('Failed to Search Restaurant');
+    }
+  }
 }
