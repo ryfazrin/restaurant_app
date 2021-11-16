@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/model/Restaurant.dart';
+import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/widget/coming_soon_alert.dart';
 import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 

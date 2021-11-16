@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/model/Restaurant.dart';
+import 'package:restaurant_app/model/restaurant.dart';
 
 class DetailSliverAppBar extends StatelessWidget {
   const DetailSliverAppBar({
