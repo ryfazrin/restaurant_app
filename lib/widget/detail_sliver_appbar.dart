@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/model/restaurant_detail.dart';
 
 class DetailSliverAppBar extends StatelessWidget {
   const DetailSliverAppBar({
@@ -7,7 +7,7 @@ class DetailSliverAppBar extends StatelessWidget {
     required this.restaurant,
   }) : super(key: key);
 
-  final Restaurant restaurant;
+  final RestaurantDetail restaurant;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class DetailSliverAppBar extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         title: Text(restaurant.name),
         background: Image.network(
-          restaurant.pictureId,
+          "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
           fit: BoxFit.fill,
         ),
       ),
