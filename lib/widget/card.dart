@@ -18,7 +18,7 @@ class CardRestaurant extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(6.0)),
         onTap: () {
           Navigator.pushNamed(context, DetailRestaurantPage.routeName,
-              arguments: restaurant);
+              arguments: restaurant!.id);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
