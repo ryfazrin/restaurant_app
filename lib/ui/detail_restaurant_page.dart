@@ -155,9 +155,10 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                       child: InkWell(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            'https://via.placeholder.com/150/?text=${food.name}',
-                            fit: BoxFit.cover,
+                          child: Card(
+                            child: Center(
+                              child: Text(food.name),
+                            ),
                           ),
                         ),
                       ),
@@ -199,9 +200,10 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                       child: InkWell(
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            'https://via.placeholder.com/150/?text=${drink.name}',
-                            fit: BoxFit.cover,
+                          child: Card(
+                            child: Center(
+                              child: Text(drink.name),
+                            ),
                           ),
                         ),
                       ),
