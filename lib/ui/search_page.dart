@@ -15,7 +15,7 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   final textFieldController = TextEditingController();
-  String queries = '';
+  String queries = ' ';
   // late Future<RestaurantSearchResult> _restaurantSearch =
   //     ApiService().getSearchRestaurant(search);
 
@@ -23,22 +23,18 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SearchProvider>(
       create: (_) => SearchProvider(apiService: ApiService()),
-      child:
-          Consumer<SearchProvider>(builder: (context, SearchProvider state, _) {
-        Future<dynamic> _restaurantSearch =
-            state.fetchRestaurantSearch(queries);
-        // state.fetchRestaurantSearch(queries);
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Container(
-              width: double.infinity,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: Center(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: Consumer<SearchProvider>(
+                builder: (context, SearchProvider state, _) {
+              return Center(
                 child: TextField(
                   controller: textFieldController,
                   decoration: InputDecoration(
@@ -53,35 +49,69 @@ class _SearchPageState extends State<SearchPage> {
                     border: InputBorder.none,
                   ),
                   onChanged: (text) {
-                    // setState(() {
-                    //   queries = text;
-                    // });
+                    setState(() {
+                      queries = text;
+                    });
                     // _restaurantSearch = state.fetchRestaurantSearch(search);
                     if (text != '') {
-                      state.fetchRestaurantSearch(text);
+                      state.fetchRestaurantSearch(query: text);
                     }
                   },
                 ),
-              ),
-            ),
+              );
+            }),
           ),
-          body: _buildListView(state),
-        );
-      }),
+        ),
+        body: Consumer<SearchProvider>(
+            builder: (context, SearchProvider state, _) {
+          if (state.state == ResultState.Loading) {
+            // loading widget
+            return Center(child: CircularProgressIndicator());
+          } else if (state.state == ResultState.HasData) {
+            return ListView.builder(
+              shrinkWrap: true,
+              physics: ScrollPhysics(),
+              itemCount: state.result.restaurants.length,
+              itemBuilder: (BuildContext context, int index) {
+                var restaurant = state.result.restaurants[index];
+                return CardRestaurantSearch(restaurant: restaurant);
+              },
+            );
+          } else if (state.state == ResultState.NoData) {
+            return Center(child: Text(state.message + ' noData'));
+          } else if (state.state == ResultState.Error) {
+            return Center(child: Text(state.message + ' Error'));
+          } else {
+            return Center(child: Text(''));
+          }
+          // return ListView.builder(
+          //   shrinkWrap: true,
+          //   physics: ScrollPhysics(),
+          //   itemCount: state.result.restaurants.length,
+          //   itemBuilder: (BuildContext context, int index) {
+          //     var restaurant = state.result.restaurants[index];
+          //     return CardRestaurantSearch(restaurant: restaurant);
+          //   },
+          // );
+        }),
+      ),
     );
   }
 
-  ListView _buildListView(SearchProvider state) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: ScrollPhysics(),
-      itemCount: state.result.restaurants.length,
-      itemBuilder: (BuildContext context, int index) {
-        var restaurant = state.result.restaurants[index];
-        return CardRestaurantSearch(restaurant: restaurant);
-      },
-    );
-  }
+  // ListView _buildListView(SearchProvider state) {
+  //   return Consumer<SearchProvider>(
+  //       builder: (context, SearchProvider state, _) {
+  //     return ListView.builder(
+  //       shrinkWrap: true,
+  //       physics: ScrollPhysics(),
+  //       itemCount: state.result.restaurants.length,
+  //       itemBuilder: (BuildContext context, int index) {
+  //         var restaurant = state.result.restaurants[index];
+  //         return CardRestaurantSearch(restaurant: restaurant);
+  //       },
+  //     );
+  //   });
+  // }
 
   // Widget _buildList() {
   //   return Consumer<SearchProvider>(

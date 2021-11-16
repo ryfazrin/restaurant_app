@@ -8,11 +8,12 @@ class SearchProvider extends ChangeNotifier {
   final ApiService apiService;
 
   SearchProvider({required this.apiService}) {
-    fetchRestaurantSearch(query);
+    fetchRestaurantSearch(query: ' ');
   }
 
   late RestaurantSearchResult _restaurantSearchResult;
   late ResultState _state;
+
   String _query = '';
 
   String get query => _query;
@@ -25,12 +26,13 @@ class SearchProvider extends ChangeNotifier {
 
   ResultState get state => _state;
 
-  Future<dynamic> fetchRestaurantSearch(String query) async {
+  Future<dynamic> fetchRestaurantSearch({String query = ''}) async {
     try {
       _state = ResultState.Loading;
       _query = query;
 
       final restaurantSearch = await apiService.getSearchRestaurant(query);
+
       if (restaurantSearch.restaurants.isEmpty) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -43,7 +45,7 @@ class SearchProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Error --> $e';
+      return _message = 'Sepertinya Ada Masalah :( -> \n $e';
     }
   }
 }
