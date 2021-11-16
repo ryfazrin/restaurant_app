@@ -22,9 +22,12 @@ class DetailSliverAppBar extends StatelessWidget {
       ),
       flexibleSpace: FlexibleSpaceBar(
         title: Text(restaurant.name),
-        background: Image.network(
-          "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
-          fit: BoxFit.fill,
+        background: Hero(
+          tag: 'image',
+          child: Image.network(
+            "https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}",
+            fit: BoxFit.fill,
+          ),
         ),
       ),
       leading: Padding(
