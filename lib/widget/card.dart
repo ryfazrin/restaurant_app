@@ -116,51 +116,6 @@ class CardRestaurantSearch extends StatelessWidget {
               Text(restaurant!.rating.toString()),
             ],
           ),
-          // children: [
-          //   ClipRRect(
-          //     borderRadius: BorderRadius.circular(8.0),
-          //     child: Image.network(
-          //       "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          //   Padding(
-          //     padding:
-          //         const EdgeInsets.symmetric(vertical: 8.0, horizontal: 2.0),
-          //     child: Column(
-          //       crossAxisAlignment: CrossAxisAlignment.start,
-          //       children: [
-          //         Text(
-          //           restaurant!.name,
-          //           style: TextStyle(
-          //             fontWeight: FontWeight.bold,
-          //             fontSize: 18,
-          //           ),
-          //         ),
-          //         SizedBox(height: 8.0),
-          //         Text(restaurant!.city),
-          //         SizedBox(height: 8.0),
-          //         Wrap(
-          //           crossAxisAlignment: WrapCrossAlignment.center,
-          //           children: [
-          //             Row(
-          //               mainAxisSize: MainAxisSize.min,
-          //               children:
-          //                   List.generate(restaurant!.rating.toInt(), (index) {
-          //                 return Icon(
-          //                   Icons.star,
-          //                   size: 14.0,
-          //                   color: Colors.amber,
-          //                 );
-          //               }),
-          //             ),
-          //             Text(restaurant!.rating.toString()),
-          //           ],
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ],
         ),
       ),
     );

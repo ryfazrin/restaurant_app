@@ -1,10 +1,3 @@
-//
-// RestaurantDetailResult restaurantDetailResultFromJson(String str) =>
-//     RestaurantDetailResult.fromJson(json.decode(str));
-//
-// String restaurantDetailResultToJson(RestaurantDetailResult data) =>
-//     json.encode(data.toJson());
-
 class RestaurantDetailResult {
   RestaurantDetailResult({
     required this.error,
