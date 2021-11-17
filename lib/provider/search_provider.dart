@@ -45,7 +45,7 @@ class SearchProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Sepertinya Ada Masalah :( -> \n $e';
+      return _message = 'Sepertinya ada Masalah dengan jaringan anda :(';
     }
   }
 }
