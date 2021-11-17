@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
-import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/provider/list_provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/widget/card.dart';
 
@@ -15,103 +16,101 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
-  late Future<RestaurantResult> _restaurant;
-
-  @override
-  void initState() {
-    super.initState();
-    _restaurant = ApiService().topHeadlines();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Restaurant App',
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0.0,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, SearchPage.routeName);
-            },
-            icon: Icon(Icons.search),
+    return ChangeNotifierProvider<ListProvider>(
+      create: (_) => ListProvider(apiService: ApiService()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            'Restaurant App',
           ),
-        ],
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 16.0,
-                horizontal: 8.0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Welcome!',
-                    style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.red),
-                  ),
-                  SizedBox(height: 8.0),
-                  Text(
-                    'Pick Your Favorite Restaurant',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                ],
-              ),
+          centerTitle: true,
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          elevation: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SearchPage.routeName);
+              },
+              icon: Icon(Icons.search),
             ),
-            _buildList(),
           ],
+        ),
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16.0,
+                  horizontal: 8.0,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Welcome!',
+                      style: TextStyle(
+                          fontSize: 24.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red),
+                    ),
+                    SizedBox(height: 8.0),
+                    Text(
+                      'Pick Your Favorite Restaurant',
+                      style: TextStyle(fontSize: 16.0),
+                    ),
+                  ],
+                ),
+              ),
+              _buildList(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildList() {
-    return FutureBuilder(
-      future: _restaurant,
-      builder: (context, AsyncSnapshot<RestaurantResult> snapshot) {
-        var state = snapshot.connectionState;
-
-        if (state != ConnectionState.done) {
-          // loading widget
+    return Consumer<ListProvider>(
+      builder: (context, state, _) {
+        if (state.state == ResultState.Loading) {
           return Center(child: CircularProgressIndicator());
+        } else if (state.state == ResultState.HasData) {
+          return StaggeredGridView.countBuilder(
+            shrinkWrap: true,
+            crossAxisCount: 2,
+            physics: ScrollPhysics(),
+            staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+            itemCount: state.result.restaurants.length,
+            itemBuilder: (BuildContext context, int index) {
+              var restaurant = state.result.restaurants[index];
+              return CardRestaurant(restaurant: restaurant);
+            },
+          );
+        } else if (state.state == ResultState.NoData) {
+          return Center(child: Text(state.message));
+        } else if (state.state == ResultState.Error) {
+          return Center(child: Text(state.message));
         } else {
-          if (snapshot.hasData) {
-            // success widget
-            return StaggeredGridView.countBuilder(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              physics: ScrollPhysics(),
-              staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-              itemCount: snapshot.data?.restaurants.length,
-              itemBuilder: (BuildContext context, int index) {
-                var restaurant = snapshot.data?.restaurants[index];
-                return CardRestaurant(restaurant: restaurant);
-              },
-            );
-          } else if (snapshot.hasError) {
-            // error widget
-            return Center(
-              child: Text(snapshot.error.toString()),
-            );
-          } else {
-            // loading widget
-            return Center(child: CircularProgressIndicator());
-          }
+          return Center(child: Text(''));
         }
       },
     );
   }
 }
+
+// StaggeredGridView.countBuilder(
+// shrinkWrap: true,
+// crossAxisCount: 2,
+// physics: ScrollPhysics(),
+// staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
+// itemCount: snapshot.data?.restaurants.length,
+// itemBuilder: (BuildContext context, int index) {
+// var restaurant = snapshot.data?.restaurants[index];
+// return CardRestaurant(restaurant: restaurant);
+// },
+// );
