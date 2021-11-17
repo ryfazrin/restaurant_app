@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/detail_provider.dart';
 import 'package:restaurant_app/widget/coming_soon_alert.dart';
 import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 
@@ -16,41 +18,37 @@ class DetailRestaurantPage extends StatefulWidget {
 }
 
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
-  late Future<RestaurantDetailResult> _restaurantDetail;
-
-  @override
-  void initState() {
-    super.initState();
-    _restaurantDetail = ApiService().foundDetail(widget.id);
-  }
+  // late Future<RestaurantDetailResult> _restaurantDetail;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _restaurantDetail = ApiService().foundDetail(widget.id);
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-          future: _restaurantDetail,
-          builder: (context, AsyncSnapshot<RestaurantDetailResult> snapshot) {
-            var state = snapshot.connectionState;
-
-            if (state != ConnectionState.done) {
-              // loading widget
+    return ChangeNotifierProvider<DetailProvider>(
+      create: (context) =>
+          DetailProvider(apiService: ApiService(), id: widget.id),
+      child: Scaffold(
+        body: Consumer<DetailProvider>(
+          builder: (context, state, _) {
+            if (state.state == ResultState.Loading) {
               return Center(child: CircularProgressIndicator());
+            } else if (state.state == ResultState.HasData) {
+              var restaurant = state.result.restaurant;
+              return _buildDetail(context, restaurant);
+            } else if (state.state == ResultState.NoData) {
+              return Center(child: Text(state.message));
+            } else if (state.state == ResultState.Error) {
+              return Center(child: Text(state.message));
             } else {
-              if (snapshot.hasData) {
-                // success widget
-                var restaurant = snapshot.data?.restaurant;
-                return _buildDetail(context, restaurant!);
-              } else if (snapshot.hasError) {
-                // error widget
-                return Center(
-                  child: Text(snapshot.error.toString()),
-                );
-              } else {
-                // loading widget
-                return Center(child: CircularProgressIndicator());
-              }
+              return Center(child: Text(''));
             }
-          }),
+          },
+        ),
+      ),
     );
   }
 
