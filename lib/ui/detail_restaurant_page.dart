@@ -18,14 +18,6 @@ class DetailRestaurantPage extends StatefulWidget {
 }
 
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
-  // late Future<RestaurantDetailResult> _restaurantDetail;
-  //
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _restaurantDetail = ApiService().foundDetail(widget.id);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DetailProvider>(

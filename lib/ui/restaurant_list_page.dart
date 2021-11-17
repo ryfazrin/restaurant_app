@@ -102,15 +102,3 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
     );
   }
 }
-
-// StaggeredGridView.countBuilder(
-// shrinkWrap: true,
-// crossAxisCount: 2,
-// physics: ScrollPhysics(),
-// staggeredTileBuilder: (int index) => StaggeredTile.fit(1),
-// itemCount: snapshot.data?.restaurants.length,
-// itemBuilder: (BuildContext context, int index) {
-// var restaurant = snapshot.data?.restaurants[index];
-// return CardRestaurant(restaurant: restaurant);
-// },
-// );
