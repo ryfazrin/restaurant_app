@@ -97,9 +97,12 @@ class CardRestaurantSearch extends StatelessWidget {
         child: ListTile(
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
-            child: Image.network(
-              "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
-              fit: BoxFit.cover,
+            child: Hero(
+              tag: restaurant?.pictureId ?? "",
+              child: Image.network(
+                "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           title: Text(
