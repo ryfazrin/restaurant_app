@@ -52,11 +52,17 @@ class CardRestaurant extends StatelessWidget {
                               bottom: 5,
                               child: CircleAvatar(
                                 backgroundColor: Colors.white,
-                                child: IconButton(
-                                  icon: Icon(Icons.favorite),
-                                  color: Colors.red,
-                                  onPressed: () {},
-                                ),
+                                child: isFavorites
+                                    ? IconButton(
+                                        icon: Icon(Icons.favorite),
+                                        color: Colors.red,
+                                        onPressed: () {},
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.favorite_border),
+                                        color: Colors.red,
+                                        onPressed: () {},
+                                      ),
                               ),
                             );
                           },
