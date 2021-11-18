@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/provider/list_provider.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/widget/card.dart';
@@ -18,65 +17,62 @@ class RestaurantListPage extends StatefulWidget {
 class _RestaurantListPageState extends State<RestaurantListPage> {
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<ListProvider>(
-      create: (_) => ListProvider(apiService: ApiService()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Restaurant App',
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          foregroundColor: Colors.black,
-          elevation: 0.0,
-          leading: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.favorite),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, SearchPage.routeName);
-              },
-              icon: Icon(Icons.search),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.settings),
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Restaurant App',
         ),
+        centerTitle: true,
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16.0,
-                  horizontal: 8.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome!',
-                      style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red),
-                    ),
-                    SizedBox(height: 8.0),
-                    Text(
-                      'Pick Your Favorite Restaurant',
-                      style: TextStyle(fontSize: 16.0),
-                    ),
-                  ],
-                ),
-              ),
-              _buildList(),
-            ],
+        foregroundColor: Colors.black,
+        elevation: 0.0,
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.favorite),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, SearchPage.routeName);
+            },
+            icon: Icon(Icons.search),
           ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.settings),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 16.0,
+                horizontal: 8.0,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Welcome!',
+                    style: TextStyle(
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red),
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Pick Your Favorite Restaurant',
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ],
+              ),
+            ),
+            _buildList(),
+          ],
         ),
       ),
     );
