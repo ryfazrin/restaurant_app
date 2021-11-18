@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/provider/list_provider.dart';
+import 'package:restaurant_app/ui/favorites_page.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/card.dart';
@@ -31,7 +32,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           foregroundColor: Colors.black,
           elevation: 0.0,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, FavoritesPage.routeName);
+            },
             icon: Icon(Icons.favorite),
           ),
           actions: [

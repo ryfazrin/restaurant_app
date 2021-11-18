@@ -114,7 +114,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                       child: Consumer<DatabaseProvider>(
                         builder: (context, provider, child) {
                           return FutureBuilder<bool>(
-                            future: provider.isFavorited(restaurant!.id),
+                            future: provider.isFavorited(restaurant.id),
                             builder: (context, snapshot) {
                               var isFavorites = snapshot.data ?? false;
 
