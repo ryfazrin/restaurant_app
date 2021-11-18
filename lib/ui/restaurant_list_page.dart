@@ -5,6 +5,7 @@ import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/provider/list_provider.dart';
 import 'package:restaurant_app/ui/favorites_page.dart';
 import 'package:restaurant_app/ui/search_page.dart';
+import 'package:restaurant_app/ui/settings_page.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/card.dart';
 
@@ -45,7 +46,9 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
               icon: Icon(Icons.search),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, SettingsPage.routeName);
+              },
               icon: Icon(Icons.settings),
             ),
           ],

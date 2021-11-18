@@ -4,6 +4,7 @@ import 'package:restaurant_app/ui/detail_restaurant_page.dart';
 import 'package:restaurant_app/ui/favorites_page.dart';
 import 'package:restaurant_app/ui/restaurant_list_page.dart';
 import 'package:restaurant_app/ui/search_page.dart';
+import 'package:restaurant_app/ui/settings_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
             ),
         SearchPage.routeName: (context) => SearchPage(),
         FavoritesPage.routeName: (context) => FavoritesPage(),
+        SettingsPage.routeName: (context) => SettingsPage(),
       },
     );
   }
