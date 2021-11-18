@@ -25,12 +25,28 @@ class CardRestaurant extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
-              child: Hero(
-                tag: restaurant?.pictureId ?? "",
-                child: Image.network(
-                  "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                children: [
+                  Hero(
+                    tag: restaurant?.pictureId ?? "",
+                    child: Image.network(
+                      "https://restaurant-api.dicoding.dev/images/small/${restaurant!.pictureId}",
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Positioned(
+                    right: 5,
+                    bottom: 5,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: IconButton(
+                        icon: Icon(Icons.favorite_border),
+                        color: Colors.red,
+                        onPressed: () {},
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
