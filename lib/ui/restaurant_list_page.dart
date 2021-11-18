@@ -29,12 +29,20 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
           elevation: 0.0,
+          leading: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.favorite),
+          ),
           actions: [
             IconButton(
               onPressed: () {
                 Navigator.pushNamed(context, SearchPage.routeName);
               },
               icon: Icon(Icons.search),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.settings),
             ),
           ],
         ),
