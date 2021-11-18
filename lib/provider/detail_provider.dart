@@ -6,14 +6,15 @@ enum ResultState { Loading, NoData, HasData, Error }
 
 class DetailProvider extends ChangeNotifier {
   late final ApiService apiService;
-  late final String id;
 
-  DetailProvider({required this.apiService, required this.id}) {
-    _fetchRestaurantDetail(id);
+  DetailProvider({required this.apiService}) {
+    _fetchRestaurantDetail();
   }
 
   late RestaurantDetailResult _restaurantDetailResult;
   late ResultState _state;
+
+  String _id = '';
   String _message = '';
 
   String get message => _message;
@@ -22,11 +23,16 @@ class DetailProvider extends ChangeNotifier {
 
   ResultState get state => _state;
 
-  Future<dynamic> _fetchRestaurantDetail(String id) async {
+  void set setId(String id) {
+    _id = id;
+    notifyListeners();
+  }
+
+  Future<dynamic> _fetchRestaurantDetail() async {
     try {
       _state = ResultState.Loading;
       notifyListeners();
-      final restaurantDetail = await apiService.foundDetail(id);
+      final restaurantDetail = await apiService.foundDetail(_id);
       if (restaurantDetail.error == true) {
         _state = ResultState.NoData;
         notifyListeners();
@@ -39,7 +45,9 @@ class DetailProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      return _message = 'Sepertinya ada Masalah dengan jaringan anda :(';
+      print("cek lagi: ${_id}");
+      return _message = 'Error kan -> $e';
+      // return _message = 'Sepertinya ada Masalah dengan jaringan anda :(';
     }
   }
 }
