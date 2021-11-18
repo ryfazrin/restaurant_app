@@ -30,4 +30,33 @@ class DatabaseProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void addFavorite(Restaurant restaurant) async {
+    try {
+      await databaseHelper.insertFavorite(restaurant);
+      _getFavorites();
+    } catch (e) {
+      _state = ResultState.Error;
+      _message = 'Error: $e';
+      notifyListeners();
+    }
+  }
+
+  Future<bool> isFavorited(String id) async {
+    final favoritedRestaurant = await databaseHelper.getFavoriteById(id);
+    return favoritedRestaurant.isNotEmpty;
+  }
+
+  void removeFavorite(String id) async {
+    try {
+      await databaseHelper.removeFavorite(id);
+      _getFavorites();
+      _state = ResultState.HasData;
+      notifyListeners();
+    } catch (e) {
+      _state = ResultState.Error;
+      _message = 'Error: $e';
+      notifyListeners();
+    }
+  }
 }
