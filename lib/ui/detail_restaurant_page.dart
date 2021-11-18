@@ -6,6 +6,7 @@ import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/detail_provider.dart';
+import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/coming_soon_alert.dart';
 import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 
