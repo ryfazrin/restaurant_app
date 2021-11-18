@@ -1,3 +1,4 @@
+import 'package:restaurant_app/model/restaurant.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseHelper {
@@ -24,7 +25,7 @@ class DatabaseHelper {
           description TEXT,
           pictureId TEXT,
           city TEXT,
-          rating INTEGER
+          rating NUMERIC
         )
         ''');
       },
@@ -38,5 +39,43 @@ class DatabaseHelper {
     _database ??= await _initializeDb();
 
     return _database;
+  }
+
+  Future<void> insertFavorite(Restaurant restaurant) async {
+    final db = await database;
+    await db!.insert(_tblFavorite, restaurant.toJson());
+  }
+
+  Future<List<Restaurant>> getFavorite() async {
+    final db = await database;
+    List<Map<String, dynamic>> results = await db!.query(_tblFavorite);
+
+    return results.map((res) => Restaurant.fromJson(res)).toList();
+  }
+
+  Future<Map> getFavoriteById(String id) async {
+    final db = await database;
+
+    List<Map<String, dynamic>> results = await db!.query(
+      _tblFavorite,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (results.isNotEmpty) {
+      return results.first;
+    } else {
+      return {};
+    }
+  }
+
+  Future<void> removeFavorite(String id) async {
+    final db = await database;
+
+    await db!.delete(
+      _tblFavorite,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
