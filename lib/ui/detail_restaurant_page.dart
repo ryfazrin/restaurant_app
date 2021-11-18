@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
+import 'package:restaurant_app/db/database_helper.dart';
+import 'package:restaurant_app/model/restaurant.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
+import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/provider/detail_provider.dart';
 import 'package:restaurant_app/widget/coming_soon_alert.dart';
 import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
@@ -9,9 +12,10 @@ import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 class DetailRestaurantPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
-  final String id;
+  final Restaurant restaurant;
 
-  const DetailRestaurantPage({Key? key, required this.id}) : super(key: key);
+  const DetailRestaurantPage({Key? key, required this.restaurant})
+      : super(key: key);
 
   @override
   State<DetailRestaurantPage> createState() => _DetailRestaurantPageState();
@@ -22,7 +26,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DetailProvider>(
       create: (context) =>
-          DetailProvider(apiService: ApiService(), id: widget.id),
+          DetailProvider(apiService: ApiService(), id: widget.restaurant.id),
       child: Scaffold(
         body: Consumer<DetailProvider>(
           builder: (context, state, _) {
@@ -61,39 +65,79 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Icon(Icons.location_on),
-                    SizedBox(width: 6.0),
-                    Text(
-                      restaurant.city,
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    Column(
+                      children: [
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Icon(Icons.location_on),
+                            SizedBox(width: 6.0),
+                            Text(
+                              restaurant.city,
+                              style: TextStyle(
+                                fontSize: 24.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 6.0),
+                        Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: List.generate(
+                                restaurant.rating.toInt(),
+                                (index) {
+                                  return Icon(
+                                    Icons.star,
+                                    size: 20.0,
+                                    color: Colors.amber,
+                                  );
+                                },
+                              ),
+                            ),
+                            SizedBox(width: 6.0),
+                            Text(restaurant.rating.toString()),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                SizedBox(height: 6.0),
-                Wrap(
-                  crossAxisAlignment: WrapCrossAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: List.generate(
-                        restaurant.rating.toInt(),
-                        (index) {
-                          return Icon(
-                            Icons.star,
-                            size: 20.0,
-                            color: Colors.amber,
+                    ChangeNotifierProvider(
+                      create: (_) =>
+                          DatabaseProvider(databaseHelper: DatabaseHelper()),
+                      child: Consumer<DatabaseProvider>(
+                        builder: (context, provider, child) {
+                          return FutureBuilder<bool>(
+                            future: provider.isFavorited(restaurant!.id),
+                            builder: (context, snapshot) {
+                              var isFavorites = snapshot.data ?? false;
+
+                              return CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child: isFavorites
+                                    ? IconButton(
+                                        icon: Icon(Icons.favorite),
+                                        color: Colors.red,
+                                        onPressed: () => provider
+                                            .removeFavorite(restaurant.id),
+                                      )
+                                    : IconButton(
+                                        icon: Icon(Icons.favorite_border),
+                                        color: Colors.red,
+                                        onPressed: () => provider
+                                            .addFavorite(widget.restaurant),
+                                      ),
+                              );
+                            },
                           );
                         },
                       ),
                     ),
-                    SizedBox(width: 6.0),
-                    Text(restaurant.rating.toString()),
                   ],
                 ),
                 SizedBox(height: 18.0),

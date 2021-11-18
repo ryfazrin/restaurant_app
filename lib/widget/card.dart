@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app/db/database_helper.dart';
 import 'package:restaurant_app/model/restaurant.dart';
-import 'package:restaurant_app/provider/database_provider.dart';
 import 'package:restaurant_app/ui/detail_restaurant_page.dart';
 
 class CardRestaurant extends StatelessWidget {
@@ -21,7 +18,7 @@ class CardRestaurant extends StatelessWidget {
         borderRadius: BorderRadius.all(Radius.circular(6.0)),
         onTap: () {
           Navigator.pushNamed(context, DetailRestaurantPage.routeName,
-              arguments: restaurant!.id);
+              arguments: restaurant);
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,39 +34,41 @@ class CardRestaurant extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  ChangeNotifierProvider(
-                    create: (_) =>
-                        DatabaseProvider(databaseHelper: DatabaseHelper()),
-                    child: Consumer<DatabaseProvider>(
-                      builder: (context, provider, child) {
-                        return FutureBuilder<bool>(
-                          future: provider.isFavorited(restaurant!.id),
-                          builder: (context, snapshot) {
-                            var isFavorites = snapshot.data ?? false;
-
-                            return Positioned(
-                              right: 5,
-                              bottom: 5,
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: isFavorites
-                                    ? IconButton(
-                                        icon: Icon(Icons.favorite),
-                                        color: Colors.red,
-                                        onPressed: () {},
-                                      )
-                                    : IconButton(
-                                        icon: Icon(Icons.favorite_border),
-                                        color: Colors.red,
-                                        onPressed: () {},
-                                      ),
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    ),
-                  ),
+                  // ChangeNotifierProvider(
+                  //   create: (_) =>
+                  //       DatabaseProvider(databaseHelper: DatabaseHelper()),
+                  //   child: Consumer<DatabaseProvider>(
+                  //     builder: (context, provider, child) {
+                  //       return FutureBuilder<bool>(
+                  //         future: provider.isFavorited(restaurant!.id),
+                  //         builder: (context, snapshot) {
+                  //           var isFavorites = snapshot.data ?? false;
+                  //
+                  //           return Positioned(
+                  //             right: 5,
+                  //             bottom: 5,
+                  //             child: CircleAvatar(
+                  //               backgroundColor: Colors.white,
+                  //               child: isFavorites
+                  //                   ? IconButton(
+                  //                       icon: Icon(Icons.favorite),
+                  //                       color: Colors.red,
+                  //                       onPressed: () => provider
+                  //                           .removeFavorite(restaurant!.id),
+                  //                     )
+                  //                   : IconButton(
+                  //                       icon: Icon(Icons.favorite_border),
+                  //                       color: Colors.red,
+                  //                       onPressed: () =>
+                  //                           provider.addFavorite(restaurant!),
+                  //                     ),
+                  //             ),
+                  //           );
+                  //         },
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
             ),
