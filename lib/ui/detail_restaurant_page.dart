@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/model/restaurant_detail.dart';
 import 'package:restaurant_app/provider/detail_provider.dart';
 import 'package:restaurant_app/widget/coming_soon_alert.dart';
@@ -19,24 +20,26 @@ class DetailRestaurantPage extends StatefulWidget {
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Consumer<DetailProvider>(
-        builder: (context, state, _) {
-          state.setId = widget.id;
-          if (state.state == ResultState.Loading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state.state == ResultState.HasData) {
-            var restaurant = state.result.restaurant;
-            return _buildDetail(context, restaurant);
-          } else if (state.state == ResultState.NoData) {
-            return Center(child: Text(state.message));
-          } else if (state.state == ResultState.Error) {
-            print("cek: ${widget.id}");
-            return Center(child: Text(state.message));
-          } else {
-            return Center(child: Text(''));
-          }
-        },
+    return ChangeNotifierProvider<DetailProvider>(
+      create: (context) =>
+          DetailProvider(apiService: ApiService(), id: widget.id),
+      child: Scaffold(
+        body: Consumer<DetailProvider>(
+          builder: (context, state, _) {
+            if (state.state == ResultState.Loading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state.state == ResultState.HasData) {
+              var restaurant = state.result.restaurant;
+              return _buildDetail(context, restaurant);
+            } else if (state.state == ResultState.NoData) {
+              return Center(child: Text(state.message));
+            } else if (state.state == ResultState.Error) {
+              return Center(child: Text(state.message));
+            } else {
+              return Center(child: Text(''));
+            }
+          },
+        ),
       ),
     );
   }
