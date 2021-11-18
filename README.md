@@ -41,3 +41,11 @@ membuat model json : https://www.dicoding.com/academies/195/discussions/114022
 menampilkan foods & drinks : https://www.dicoding.com/academies/195/discussions/125677
 
 Rating Generate : https://medium.com/icnh/a-star-rating-widget-for-flutter-41560f82c8cb
+
+Scheduling : https://www.dicoding.com/academies/195/discussions/91588
+
+Mock pada unit test :
+https://www.dicoding.com/academies/195/discussions/138162
+https://www.dicoding.com/academies/195/discussions/83502
+https://www.dicoding.com/academies/195/discussions/133822
+https://docs.flutter.dev/cookbook/testing/unit/mocking
