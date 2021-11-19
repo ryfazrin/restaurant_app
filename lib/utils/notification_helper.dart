@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:restaurant_app/common/navigation.dart';
 import 'package:restaurant_app/model/restaurant.dart';
@@ -67,9 +66,8 @@ class NotificationHelper {
 
     var titleNotification = "<b>Daftar Restaurant</b>";
     var restaurantName = restaurantResult.restaurants[randomNumber].name;
-    var payload = {"Id": restaurantResult.restaurants[randomNumber].id};
+    var payload = {"id": restaurantResult.restaurants[randomNumber].id};
 
-    debugPrint("restaurant id =========== : " + json.encode(payload));
     await flutterLocalNotificationsPlugin.show(
         0, titleNotification, restaurantName, platformChannelSpecifics,
         payload: json.encode(payload));
@@ -79,7 +77,7 @@ class NotificationHelper {
     selectNotificationSubject.stream.listen(
       (String payload) async {
         var data = json.decode(payload);
-        Navigation.intentWithData(route, data['Id']);
+        Navigation.intentWithData(route, data['id']);
       },
     );
   }
