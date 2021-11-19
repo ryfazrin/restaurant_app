@@ -13,10 +13,9 @@ import 'package:restaurant_app/widget/detail_sliver_appbar.dart';
 class DetailRestaurantPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
-  final Restaurant restaurant;
+  final String id;
 
-  const DetailRestaurantPage({Key? key, required this.restaurant})
-      : super(key: key);
+  const DetailRestaurantPage({Key? key, required this.id}) : super(key: key);
 
   @override
   State<DetailRestaurantPage> createState() => _DetailRestaurantPageState();
@@ -27,7 +26,7 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<DetailProvider>(
       create: (context) =>
-          DetailProvider(apiService: ApiService(), id: widget.restaurant.id),
+          DetailProvider(apiService: ApiService(), id: widget.id),
       child: Scaffold(
         body: Consumer<DetailProvider>(
           builder: (context, state, _) {
@@ -130,9 +129,17 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                                     : IconButton(
                                         icon: Icon(Icons.favorite_border),
                                         color: Colors.red,
-                                        onPressed: () => provider
-                                            .addFavorite(widget.restaurant),
-                                      ),
+                                        onPressed: () {
+                                          Restaurant addData = Restaurant(
+                                            id: restaurant.id,
+                                            name: restaurant.name,
+                                            description: restaurant.description,
+                                            pictureId: restaurant.pictureId,
+                                            city: restaurant.city,
+                                            rating: restaurant.rating,
+                                          );
+                                          return provider.addFavorite(addData);
+                                        }),
                               );
                             },
                           );
