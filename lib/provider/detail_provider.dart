@@ -39,7 +39,6 @@ class DetailProvider extends ChangeNotifier {
     } catch (e) {
       _state = ResultState.Error;
       notifyListeners();
-      // return _message = 'Error kan -> $e';
       return _message = 'Sepertinya ada Masalah dengan jaringan anda :(';
     }
   }
