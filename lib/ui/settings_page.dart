@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/provider/scheduling_provider.dart';
 
 class SettingsPage extends StatelessWidget {
   static const routeName = '/settings';
@@ -7,17 +9,18 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-      ),
-      body: ListTile(
-        title: Text('Scheduling Restaurant'),
-        trailing: Switch.adaptive(
-          value: false,
-          onChanged: (value) {
-            value = !value;
-          },
+    return ChangeNotifierProvider<SchedulingProvider>(
+      create: (_) => SchedulingProvider(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Settings'),
+        ),
+        body: ListTile(
+          title: Text('Scheduling Restaurant'),
+          trailing: Switch.adaptive(
+            value: false,
+            onChanged: (value) async {},
+          ),
         ),
       ),
     );
