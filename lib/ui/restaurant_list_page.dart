@@ -3,9 +3,12 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/api/api_service.dart';
 import 'package:restaurant_app/provider/list_provider.dart';
+import 'package:restaurant_app/ui/detail_restaurant_page.dart';
 import 'package:restaurant_app/ui/favorites_page.dart';
 import 'package:restaurant_app/ui/search_page.dart';
 import 'package:restaurant_app/ui/settings_page.dart';
+import 'package:restaurant_app/utils/background_service.dart';
+import 'package:restaurant_app/utils/notification_helper.dart';
 import 'package:restaurant_app/utils/result_state.dart';
 import 'package:restaurant_app/widget/card.dart';
 
@@ -19,6 +22,9 @@ class RestaurantListPage extends StatefulWidget {
 }
 
 class _RestaurantListPageState extends State<RestaurantListPage> {
+  final NotificationHelper _notificationHelper = NotificationHelper();
+  final BackgroundService _service = BackgroundService();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<ListProvider>(
@@ -115,5 +121,19 @@ class _RestaurantListPageState extends State<RestaurantListPage> {
         }
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    port.listen((_) async => await _service.someTask());
+    _notificationHelper
+        .configureSelectNotificationSubject(DetailRestaurantPage.routeName);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    selectNotificationSubject.close();
   }
 }
