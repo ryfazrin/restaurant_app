@@ -17,9 +17,15 @@ class SettingsPage extends StatelessWidget {
         ),
         body: ListTile(
           title: Text('Scheduling Restaurant'),
-          trailing: Switch.adaptive(
-            value: false,
-            onChanged: (value) async {},
+          trailing: Consumer<SchedulingProvider>(
+            builder: (context, scheduled, _) {
+              return Switch.adaptive(
+                value: false,
+                onChanged: (value) async {
+                  scheduled.scheduledRestaurant(value);
+                },
+              );
+            },
           ),
         ),
       ),
